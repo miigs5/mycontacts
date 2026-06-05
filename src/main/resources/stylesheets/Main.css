@@ -1,0 +1,18 @@
+.toolbar {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+.button {
+    -fx-background-insets: 0;
+    -fx-style: none;
+    -fx-border: none;
+    -fx-background-color: cornflowerblue;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-underline: true;
+    -fx-background-color: darkblue;
+    -fx-cursor: hand;
+}
