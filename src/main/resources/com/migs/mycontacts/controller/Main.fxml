@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -12,8 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<?import java.net.URL?>
-<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="/stylesheets/Main.css" xmlns="http://javafx.com/javafx/25.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.migs.mycontacts.controller.MainController">
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="/stylesheets/Main.css" xmlns="http://javafx.com/javafx/25.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.migs.mycontacts.controller.MainControllerGUI">
     <stylesheets>
         <URL value="@/stylesheets/Main.css" />
         <URL value="@/stylesheets/Button.css" />
@@ -25,7 +25,7 @@
               <items>
                   <ChoiceBox id="filtroBuscar" fx:id="filtroBuscar" prefHeight="40.0" prefWidth="150.0" />
                   <TextField id="barra-pesquisa" fx:id="textoBuscar" prefHeight="40.0" prefWidth="154.0" />
-                <Button fx:id="botaoBuscar" defaultButton="true" maxHeight="40.0" mnemonicParsing="false" text="Buscar" textAlignment="CENTER">
+                <Button fx:id="botaoBuscar" defaultButton="true" maxHeight="40.0" mnemonicParsing="false" onAction="#buscarContato" text="Buscar" textAlignment="CENTER">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>
@@ -34,9 +34,9 @@
             </ToolBar>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" HBox.hgrow="NEVER">
               <buttons>
-                <Button id="adicionar" fx:id="botaoAdicionar" maxHeight="40.0" mnemonicParsing="false" text="Adicionar" />
-                  <Button id="editar" fx:id="botaoEditar" disable="true" layoutX="31.0" layoutY="20.0" maxHeight="40.0" mnemonicParsing="false" text="Editar" />
-                  <Button id="excluir" fx:id="botaoExcluir" disable="true" layoutX="24.0" layoutY="28.0" maxHeight="40.0" mnemonicParsing="false" text="Excluir" />
+                <Button id="adicionar" fx:id="botaoAdicionar" maxHeight="40.0" mnemonicParsing="false" onAction="#adicionarContato" text="Adicionar" />
+                  <Button id="editar" fx:id="botaoEditar" disable="true" layoutX="31.0" layoutY="20.0" maxHeight="40.0" mnemonicParsing="false" onAction="#editarContato" text="Editar" />
+                  <Button id="excluir" fx:id="botaoExcluir" disable="true" layoutX="24.0" layoutY="28.0" maxHeight="40.0" mnemonicParsing="false" onAction="#excluirContato" text="Excluir" />
               </buttons>
                <padding>
                   <Insets right="10.0" />
@@ -47,8 +47,8 @@
       <TableView fx:id="tabelaContatos" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <columns>
           <TableColumn minWidth="200.0" prefWidth="200.0" resizable="false" text="Nome" />
-          <TableColumn maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" text="Telefone(s)" />
-            <TableColumn maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" text="E-mail(s)" />
+          <TableColumn maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" text="Telefone" />
+            <TableColumn maxWidth="300.0" minWidth="200.0" prefWidth="200.0" resizable="false" text="E-mail" />
             <TableColumn minWidth="300.0" prefWidth="300.0" text="Descricao" />
         </columns>
       </TableView>

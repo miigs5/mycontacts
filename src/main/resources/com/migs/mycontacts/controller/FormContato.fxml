@@ -31,7 +31,7 @@
             <TextField fx:id="textTelefone" layoutX="120.0" layoutY="13.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
             <TextField fx:id="textEmail" layoutX="120.0" layoutY="54.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
             <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="58.0" prefHeight="16.0" prefWidth="157.0" text="Descricao:" GridPane.rowIndex="3" />
-            <TextArea prefHeight="285.0" prefWidth="106.0" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <TextArea fx:id="textDescricao" prefHeight="285.0" prefWidth="106.0" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
             <Label alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="582.0" text="Nome:" />
          </children>
       </GridPane>
@@ -39,8 +39,8 @@
          <children>
             <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="400.0" spacing="25.0">
                <children>
-                  <Button layoutX="48.0" layoutY="48.0" mnemonicParsing="false" prefWidth="100.0" styleClass="button" text="Cancelar" />
-                  <Button layoutX="276.0" layoutY="48.0" mnemonicParsing="false" prefWidth="100.0" styleClass="button" text="Confirmar" />
+                  <Button fx:id="botaoCancelar" layoutX="48.0" layoutY="48.0" mnemonicParsing="false" onAction="#sairTela" prefWidth="100.0" styleClass="button" text="Cancelar" />
+                  <Button fx:id="botaoConfirmar" layoutX="276.0" layoutY="48.0" mnemonicParsing="false" onAction="#enviarContato" prefWidth="100.0" styleClass="button" text="Confirmar" />
                </children>
             </HBox>
          </children>
