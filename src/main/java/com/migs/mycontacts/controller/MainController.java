@@ -35,7 +35,22 @@ public class MainController {
     }
 
     @FXML
-    private void botaoBuscar() {
+    private void buscarContato() {
+
+    }
+
+    @FXML
+    private void adicionarContato() {
+
+    }
+
+    @FXML
+    private void editarContato() {
+
+    }
+
+    @FXML
+    private void excluirContato() {
 
     }
 }
