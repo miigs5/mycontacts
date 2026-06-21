@@ -1,21 +1,26 @@
 package com.migs.mycontacts;
 
-import java.util.Scanner;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-import com.migs.mycontacts.controller.MainController;
-import com.migs.mycontacts.mapper.ContatoDTOMapper;
-import com.migs.mycontacts.repository.ContatoRepository;
-import com.migs.mycontacts.repository.arquivo.ContatoArquivoRepository;
-import com.migs.mycontacts.service.ContatoService;
-import com.migs.mycontacts.view.MainView;
+import java.io.IOException;
 
-public class MyContacts {
-    public static void main(String[] args) {
-        ContatoRepository repository = new ContatoArquivoRepository();
-        ContatoService service = new ContatoService(repository, ContatoDTOMapper.INSTANCE);
-        MainView mainView = new MainView(new Scanner(System.in));
-        MainController mainController = new MainController(mainView, service);
+public class MyContacts extends Application {
+    @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/migs/mycontacts/controller/Main.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
 
-        mainController.init();
+        stage.setScene(scene);
+        stage.setTitle("MyContacts");
+        stage.setMinHeight(600);
+        stage.setMinWidth(900);
+        stage.show();
     }
+
+    public static void main(String[] args) { launch(args); }
 }
