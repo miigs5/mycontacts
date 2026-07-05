@@ -1,7 +1,5 @@
 package com.migs.mycontacts.model;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 import com.migs.mycontacts.exception.ContatoInvalidoException;
@@ -9,22 +7,22 @@ import com.migs.mycontacts.exception.ContatoInvalidoException;
 public class Contato {
     private UUID id;
     private Nome nome;
-    private List<Telefone> telefones = Collections.emptyList();
-    private List<Email> emails = Collections.emptyList();
+    private Telefone telefone;
+    private Email email;
     private String descricao;
 
-    public Contato(UUID id, Nome nome, List<Telefone> telefones, List<Email> emails, String descricao) {
+    public Contato(UUID id, Nome nome, Telefone telefone, Email email, String descricao) {
         setId(id);
         setNome(nome);
-        setTelefones(telefones);
-        setEmail(emails);
+        setTelefone(telefone);
+        setEmail(email);
         setDescricao(descricao);
     }
 
     public UUID getId() { return id; }
     public Nome getNome() { return nome; }
-    public List<Telefone> getTelefones() { return telefones; }
-    public List<Email> getEmails() { return emails; }
+    public Telefone getTelefone() { return telefone; }
+    public Email getEmail() { return email; }
     public String getDescricao() { return descricao; }
 
     public void setId(UUID id) {
@@ -39,20 +37,20 @@ public class Contato {
         this.nome = nome;
     }
 
-    public void setTelefones(List<Telefone> telefones) {
-        if (telefones == null || telefones.isEmpty()) {
+    public void setTelefone(Telefone telefone) {
+        if (telefone == null) {
             throw new ContatoInvalidoException("Telefone nao deve ser vazio.");
         }
 
-        this.telefones = telefones;
+        this.telefone = telefone;
     }
 
-    public void setEmail(List<Email> emails) {
-        if (emails == null) {
-            throw new ContatoInvalidoException("Emails nao deve ser vazio.");
+    public void setEmail(Email email) {
+        if (email == null) {
+            throw new ContatoInvalidoException("Email nao deve ser vazio.");
         }
 
-        this.emails = emails;
+        this.email = email;
     }
 
     public void setDescricao(String descricao) {
