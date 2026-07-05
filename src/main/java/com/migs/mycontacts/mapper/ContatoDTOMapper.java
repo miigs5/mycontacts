@@ -18,8 +18,8 @@ public enum ContatoDTOMapper implements MapperDTO<Contato, ContatoDTO> {
         return new Contato(
             Optional.ofNullable(dto.id()).map(UUID::fromString).orElse(null),
             new Nome(dto.nome()),
-            dto.telefones().stream().map(Telefone::new).toList(),
-            dto.emails().stream().map(Email::new).toList(),
+            new Telefone(dto.telefone()),
+            new Email(dto.email()),
             dto.descricao()
         );
     }
@@ -29,8 +29,8 @@ public enum ContatoDTOMapper implements MapperDTO<Contato, ContatoDTO> {
         return new ContatoDTO(
             contato.getId().toString(),
             contato.getNome().nome(),
-            contato.getTelefones().stream().map(Telefone::telefone).toList(),
-            contato.getEmails().stream().map(Email::email).toList(),
+            contato.getTelefone().telefone(),
+            contato.getEmail().email(),
             contato.getDescricao()
         );
     }

@@ -17,16 +17,9 @@ public enum ContatoArquivoMapper implements MapperPersistence<Contato, String> {
     public String serializar(Contato contato) {
         return contato.getId().toString() + ";"
             + contato.getNome().nome() + ";"
-            + contato.getTelefones().stream()
-                .map(Telefone::telefone)
-                .collect(Collectors.joining("/")) + ";"
-            + Optional.of(contato.getEmails())
-                .filter(emails -> !emails.isEmpty())
-                .map(emails -> emails.stream()
-                                     .map(Email::email)
-                                     .collect(Collectors.joining("/")))
-                .orElse("null") + ";"
-            + Optional.ofNullable(contato.getDescricao()).orElse("null");
+            + contato.getTelefone().toString() + ";"
+            + Optional.of(contato.getEmail()).map(Email::toString).orElse("null") + ";"
+            + Optional.of(contato.getDescricao()).orElse("null");
     }
 
     public Contato desserializar(String str) {
@@ -38,10 +31,8 @@ public enum ContatoArquivoMapper implements MapperPersistence<Contato, String> {
         return new Contato(
             UUID.fromString(campos[0]),
             new Nome(campos[1]),
-            Arrays.stream(campos[2].split("/")).map(Telefone::new).toList(),
-            Optional.ofNullable(campos[3])
-                .map(emails -> Arrays.stream(emails.split("/")).map(Email::new).toList())
-                .orElse(Collections.emptyList()),
+            new Telefone(campos[2]),
+            Optional.ofNullable(campos[3]).map(Email::new).orElse(null),
             campos[4]
         );
     }

@@ -33,9 +33,7 @@ public class ContatoService {
 
         Contato contato = mapper.paraEntidade(dto);
 
-        if (contato.getTelefones().stream().anyMatch(
-                telefone -> repo.existePorNomeETelefone(contato.getNome(), telefone)
-        )) {
+        if (repo.existePorNomeETelefone(contato.getNome(), contato.getTelefone())) {
             throw new ContatoInvalidoException("Nome e telefone duplicado.");
         }
 
@@ -72,9 +70,7 @@ public class ContatoService {
         }
 
         Contato contato = mapper.paraEntidade(dto);
-        if (contato.getTelefones().stream().anyMatch(
-            telefone -> repo.existePorNomeETelefone(contato.getNome(), telefone)
-        )) {
+        if (repo.existePorNomeETelefone(contato.getNome(), contato.getTelefone())) {
             throw new ContatoInvalidoException("Dados duplicados.");
         }
 
