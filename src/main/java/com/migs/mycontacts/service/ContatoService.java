@@ -44,7 +44,7 @@ public class ContatoService {
 
     public Map<String, ContatoDTO> buscarTodosContatos() {
         return repo.buscarTodos().entrySet().stream()
-            .collect(Collectors.toUnmodifiableMap(
+            .collect(Collectors.toMap(
                 entry -> entry.getKey().toString(),
                 entry -> mapper.paraDto(entry.getValue())
             ));

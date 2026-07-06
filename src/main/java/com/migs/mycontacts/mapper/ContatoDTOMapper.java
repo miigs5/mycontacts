@@ -30,7 +30,7 @@ public enum ContatoDTOMapper implements MapperDTO<Contato, ContatoDTO> {
             contato.getId().toString(),
             contato.getNome().nome(),
             contato.getTelefone().telefone(),
-            contato.getEmail().email(),
+            contato.getEmail() == null ? null : contato.getEmail().email(),
             contato.getDescricao()
         );
     }
