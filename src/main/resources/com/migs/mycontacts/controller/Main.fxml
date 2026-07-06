@@ -23,7 +23,12 @@
             <ToolBar prefHeight="3.0" prefWidth="590.0" styleClass="toolbar" HBox.hgrow="ALWAYS">
               <items>
                   <TextField id="barra-pesquisa" fx:id="textoBuscar" prefHeight="40.0" prefWidth="154.0" promptText="NOME" />
-                <Button fx:id="botaoBuscar" defaultButton="true" maxHeight="40.0" mnemonicParsing="false" text="Buscar" textAlignment="CENTER">
+                <Button fx:id="botaoBuscar" defaultButton="true" maxHeight="40.0" mnemonicParsing="false" onAction="#buscarContato" text="Buscar" textAlignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="botaoReset" defaultButton="true" layoutX="168.0" layoutY="10.0" maxHeight="40.0" mnemonicParsing="false" onAction="#resetarTabela" text="Reset" textAlignment="CENTER">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>
@@ -32,9 +37,9 @@
             </ToolBar>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" HBox.hgrow="NEVER">
               <buttons>
-                <Button id="adicionar" fx:id="botaoAdicionar" maxHeight="40.0" mnemonicParsing="false" text="Adicionar" />
-                  <Button id="editar" fx:id="botaoEditar" disable="true" layoutX="31.0" layoutY="20.0" maxHeight="40.0" mnemonicParsing="false" text="Editar" />
-                  <Button id="excluir" fx:id="botaoExcluir" disable="true" layoutX="24.0" layoutY="28.0" maxHeight="40.0" mnemonicParsing="false" text="Excluir" />
+                <Button id="adicionar" fx:id="botaoAdicionar" maxHeight="40.0" mnemonicParsing="false" onAction="#adicionarContato" text="Adicionar" />
+                  <Button id="editar" fx:id="botaoEditar" layoutX="31.0" layoutY="20.0" maxHeight="40.0" mnemonicParsing="false" onAction="#editarContato" text="Editar" />
+                  <Button id="excluir" fx:id="botaoExcluir" layoutX="24.0" layoutY="28.0" maxHeight="40.0" mnemonicParsing="false" onAction="#excluirContato" text="Excluir" />
               </buttons>
                <padding>
                   <Insets right="10.0" />
@@ -44,11 +49,11 @@
       </HBox>
       <TableView fx:id="tabelaContatos" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn editable="false" minWidth="200.0" prefWidth="200.0" resizable="false" sortable="false" text="ID" visible="false" />
-          <TableColumn editable="false" minWidth="200.0" prefWidth="200.0" resizable="false" text="Nome" />
-          <TableColumn editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" text="Telefone" />
-            <TableColumn editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" text="E-mail" />
-            <TableColumn editable="false" minWidth="300.0" prefWidth="300.0" sortable="false" text="Descricao" />
+            <TableColumn fx:id="colunaId" editable="false" minWidth="200.0" prefWidth="200.0" resizable="false" sortable="false" text="ID" visible="false" />
+          <TableColumn fx:id="colunaNome" editable="false" minWidth="200.0" prefWidth="200.0" resizable="false" text="Nome" />
+          <TableColumn fx:id="colunaTelefone" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" text="Telefone" />
+            <TableColumn fx:id="colunaEmail" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" text="E-mail" />
+            <TableColumn fx:id="colunaDescricao" editable="false" minWidth="300.0" prefWidth="300.0" sortable="false" text="Descricao" />
         </columns>
       </TableView>
    </children>
