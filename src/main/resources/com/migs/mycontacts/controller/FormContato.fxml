@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" fillWidth="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" spacing="50.0" stylesheets="@/stylesheets/Button.css" xmlns="http://javafx.com/javafx/25.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.migs.mycontacts.controller.FormContatoController">
+<VBox alignment="CENTER" fillWidth="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" spacing="50.0" stylesheets="@/stylesheets/Button.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.migs.mycontacts.controller.FormContatoController">
    <children>
       <GridPane alignment="CENTER" hgap="10.0" maxWidth="500.0" minWidth="100.0" prefHeight="230.0" prefWidth="226.0" vgap="10.0">
         <columnConstraints>
@@ -25,6 +25,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
+            <TextField fx:id="textId" editable="false" visible="false" />
             <TextField fx:id="textNome" GridPane.columnIndex="1" GridPane.columnSpan="2" />
             <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="17.0" prefHeight="16.0" prefWidth="157.0" text="Telefone:" GridPane.rowIndex="1" />
             <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="58.0" prefHeight="16.0" prefWidth="166.0" text="E-mail:" GridPane.rowIndex="2" />
