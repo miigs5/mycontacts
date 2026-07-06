@@ -46,20 +46,10 @@ public class Contato {
     }
 
     public void setEmail(Email email) {
-        if (email == null) {
-            throw new ContatoInvalidoException("Email nao deve ser vazio.");
-        }
-
         this.email = email;
     }
 
     public void setDescricao(String descricao) {
-        if (descricao != null) {
-            if (descricao.isBlank()) {
-                throw new ContatoInvalidoException("Descricao deve possuir texto.");
-            }
-
-            this.descricao = descricao.trim().replace(';', ',');
-        }
+        if (descricao != null) { this.descricao = descricao.trim(); }
     }
 }

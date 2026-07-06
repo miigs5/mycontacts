@@ -29,11 +29,11 @@ public class ContatoDAO implements ContatoRepository {
             preparedStatement.setString(1, contato.getId().toString());
             preparedStatement.setString(2, contato.getNome().nome());
             preparedStatement.setString(3, contato.getTelefone().telefone());
-            preparedStatement.setString(4, contato.getEmail().email());
-            preparedStatement.setString(5, contato.getDescricao());
+            preparedStatement.setString(4, contato.getEmail() != null ? contato.getEmail().email() : null);
+            preparedStatement.setString(5, contato.getDescricao() != null ? contato.getDescricao() : null);
             preparedStatement.execute();
 
-            bufferContatos = buscarTodos();
+            bufferContatos.put(contato.getId(), contato);
 
             return contato;
         }
