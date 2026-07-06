@@ -18,10 +18,10 @@ public enum ConexaoJDBC {
             if (connection == null || connection.isClosed()) {
                 String sql = """
                     CREATE TABLE IF NOT EXISTS contato (
-                        id TEXT PRIMARY KEY,
-                        nome TEXT NOT NULL,
-                        telefone TEXT NOT NULL,
-                        email TEXT NOT NULL,
+                        id VARCHAR(36) PRIMARY KEY,
+                        nome VARCHAR(100) NOT NULL,
+                        telefone VARCHAR(13) NOT NULL,
+                        email TEXT,
                         descricao TEXT
                     );
                 """;
