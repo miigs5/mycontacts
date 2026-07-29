@@ -2,19 +2,13 @@ package com.migs.mycontacts.controller;
 
 import com.migs.mycontacts.dto.ContatoDTO;
 import com.migs.mycontacts.exception.ContatoInvalidoException;
-import com.migs.mycontacts.mapper.ContatoDTOMapper;
-import com.migs.mycontacts.repository.sqlite.ContatoDAO;
 import com.migs.mycontacts.service.ContatoService;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import javax.swing.*;
-import java.io.IOException;
 
 public class FormContatoController {
     @FXML
@@ -93,7 +87,7 @@ public class FormContatoController {
             }
 
             else {
-                ContatoDTO novoContatoDto = contatoService.editarContato(contatoDto.id(), contatoDto);
+                contatoService.editarContato(contatoDto.id(), contatoDto);
                 JOptionPane.showMessageDialog(null, "Contato alterado com sucesso!");
                 mainController.resetarTabela();
             }
