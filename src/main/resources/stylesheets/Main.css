@@ -1,9 +1,0 @@
-* {
-    -fx-outline: none;
-    -fx-border: none;
-}
-
-.toolbar {
-    -fx-background-color: transparent;
-    -fx-padding: 10px;
-}

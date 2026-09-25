@@ -1,26 +1,11 @@
 package com.migs.mycontacts;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.IOException;
-
-public class MyContacts extends Application {
-    @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/migs/mycontacts/controller/Main.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("MyContacts");
-        stage.setMinHeight(600);
-        stage.setMinWidth(900);
-        stage.show();
+@SpringBootApplication
+public class MyContacts {
+    public static void main(String[] args) {
+        SpringApplication.run(MyContacts.class, args);
     }
-
-    public static void main(String[] args) { launch(args); }
 }
