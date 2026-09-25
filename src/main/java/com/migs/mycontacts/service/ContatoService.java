@@ -1,88 +1,111 @@
 package com.migs.mycontacts.service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-import com.migs.mycontacts.dto.ContatoDTO;
-import com.migs.mycontacts.exception.ContatoInvalidoException;
-import com.migs.mycontacts.mapper.MapperDTO;
-import com.migs.mycontacts.model.Contato;
-import com.migs.mycontacts.model.Nome;
+import com.migs.mycontacts.dto.request.contato.AtualizarContatoRequestDTO;
+import com.migs.mycontacts.dto.request.contato.CriarContatoRequestDTO;
+import com.migs.mycontacts.dto.response.ContatoResponseDTO;
+import com.migs.mycontacts.exception.RegraNegocioException;
+import com.migs.mycontacts.mapper.ContatoMapper;
+import com.migs.mycontacts.entity.ContatoEntity;
 import com.migs.mycontacts.repository.ContatoRepository;
+import com.migs.mycontacts.security.UsuarioAutenticado;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@AllArgsConstructor
+@Transactional(readOnly = true)
+@Service
 public class ContatoService {
-    private final ContatoRepository repo;
-    private final MapperDTO<Contato, ContatoDTO> mapper;
+    @NonNull
+    private ContatoRepository repo;
 
-    public ContatoService(ContatoRepository repo, MapperDTO<Contato, ContatoDTO> mapper) {
-        if (repo == null || mapper == null) {
-            throw new NullPointerException("[ERRO] Repository ou Mapper nao pode ser NULL.");
-        }
+    @NonNull
+    private ContatoMapper mapper;
 
-        this.repo = repo;
-        this.mapper = mapper;
-    }
+    @NonNull
+    private UsuarioAutenticado usuarioLogado;
 
-    public ContatoDTO salvarContato(ContatoDTO dto) {
+    @Transactional
+    public ContatoResponseDTO salvarContato(CriarContatoRequestDTO dto) {
         if (dto == null) {
-            throw new NullPointerException("Contato nao pode ser NULL.");
+            throw new NullPointerException("Contato não pode ser vazio.");
         }
 
-        Contato contato = mapper.paraEntidade(dto);
+        ContatoEntity contato = mapper.paraEntidade(dto);
 
-        if (repo.existePorNomeETelefone(contato.getNome(), contato.getTelefone())) {
-            throw new ContatoInvalidoException("Nome e telefone duplicado.");
+        if (repo.existeContatoDuplicado(contato.getNome(), contato.getTelefone(), usuarioLogado.getUsuario(), null)) {
+            throw new RegraNegocioException("Nome e telefone duplicado.");
         }
 
-        contato.setId(UUID.randomUUID());
-
-        return mapper.paraDto(repo.salvar(contato));
+        contato.setUsuario(usuarioLogado.getUsuario());
+        return mapper.paraDto(repo.save(contato));
     }
 
-    public Map<String, ContatoDTO> buscarTodosContatos() {
-        return repo.buscarTodos().entrySet().stream()
-            .collect(Collectors.toMap(
-                entry -> entry.getKey().toString(),
-                entry -> mapper.paraDto(entry.getValue())
-            ));
+    public List<ContatoResponseDTO> listarContatos() {
+        return repo.findByUsuario(usuarioLogado.getUsuario()).stream()
+            .map(mapper::paraDto).toList();
     }
 
-    public Optional<ContatoDTO> buscarContatoPorId(String id) {
-        if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("ID invalido.");
+    public ContatoResponseDTO buscarContatoPorId(UUID id) {
+        if (id == null) {
+            throw new NullPointerException("ID não deve ser vazio.");
         }
 
-        Optional<Contato> contato = repo.buscarPorId(UUID.fromString(id));
-        return contato.map(mapper::paraDto);
+        return repo.findByIdAndUsuario(id, usuarioLogado.getUsuario()).map(mapper::paraDto)
+            .orElseThrow(() -> new RegraNegocioException("Contato inexistente."));
     }
 
-    public List<ContatoDTO> buscarContatoPorNome(String nome) {
-        List<Contato> contatos = repo.buscarPorNome(new Nome(nome));
+    public List<ContatoResponseDTO> buscarContatoPorNome(String nome) {
+        if (nome == null) {
+            throw new NullPointerException("Nome não deve ser vazio.");
+        }
+
+        List<ContatoEntity> contatos = repo.findByNomeAndUsuario(nome, usuarioLogado.getUsuario());
         return contatos.stream().map(mapper::paraDto).toList();
     }
 
-    public ContatoDTO editarContato(String id, ContatoDTO dto) {
-        if (id == null || dto == null) {
-            throw new NullPointerException("ID ou Contato nao deve ser NULL.");
-        }
+    public List<ContatoResponseDTO> buscarContatoPorTelefone(String telefone) {
+        List<ContatoEntity> contatos = repo.findByTelefoneAndUsuario(telefone, usuarioLogado.getUsuario());
 
-        Contato contato = mapper.paraEntidade(dto);
-        if (repo.existePorNomeETelefone(contato.getNome(), contato.getTelefone())) {
-            throw new ContatoInvalidoException("Dados duplicados.");
-        }
-
-        Contato contatoRetorno = repo.editar(UUID.fromString(id), contato);
-        return mapper.paraDto(contatoRetorno);
+        return contatos.stream().map(mapper::paraDto).toList();
     }
 
-    public ContatoDTO removerContato(String id) {
-        if (id == null) {
-            throw new NullPointerException("ID nao pode ser NULL.");
+    @Transactional
+    public ContatoResponseDTO editarContato(UUID id, AtualizarContatoRequestDTO dto) {
+        if (id == null || dto == null) {
+            throw new NullPointerException("ID ou Contato não deve ser vazio.");
         }
 
-        return mapper.paraDto(repo.remover(UUID.fromString(id)));
+        ContatoEntity contato = repo.findByIdAndUsuario(id, usuarioLogado.getUsuario()).orElseThrow(
+            () -> new EntityNotFoundException("Contato inexistente.")
+        );
+
+        String nome = (dto.nome() == null || dto.nome().isBlank()) ? contato.getNome() : dto.nome();
+        String telefone = (dto.telefone() == null || dto.telefone().isBlank()) ? contato.getTelefone() : dto.telefone();
+        if (repo.existeContatoDuplicado(nome, telefone, usuarioLogado.getUsuario(), id)) {
+            throw new RegraNegocioException("Dados duplicados.");
+        }
+
+        contato.setNome(nome);
+        contato.setTelefone(telefone);
+
+        if (dto.email() != null) { contato.setEmail(dto.email()); }
+        if (dto.descricao() != null) { contato.setDescricao(dto.descricao()); }
+
+        return mapper.paraDto(repo.save(contato));
+    }
+
+    @Transactional
+    public void removerContato(UUID id) {
+        if (id == null) {
+            throw new NullPointerException("ID não pode ser vazio.");
+        }
+
+        repo.deleteByIdAndUsuario(id, usuarioLogado.getUsuario());
     }
 }
