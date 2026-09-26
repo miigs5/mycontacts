@@ -65,7 +65,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ExceptionDTO(
             HttpStatus.UNAUTHORIZED.value(),
             "Dados Inválidos",
-            "Usuário ou senha incorretos..",
+            "Usuário ou senha incorretos.",
             null,
             LocalDateTime.now().toString()
         ));
