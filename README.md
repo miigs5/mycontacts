@@ -12,7 +12,7 @@ Uma API para usuários criarem uma conta própria e gerenciar seus contatos tele
 1. Instale e use Maven na sua IDE
 2. Configure um banco de dados local em PostgreSQL
 3. Configure as variáveis da aplicação em `/src/main/resources/application.properties`:
-	3.1. Defina `spring.datasource.url = jdbc:postgresql://<nome_do_host>:<porta>/<nome_do_banco>`
-	3.2. Defina `spring.datasource.username = <nome_do_usuário_do_banco>`
-	3.3. Defina `spring.datasource.password = <senha_do_usuário_do_banco>`
-4. Execute o arquivo `/src/main/java/com/migs/mycontacts/MyContacts.java`
+4. Defina `spring.datasource.url = jdbc:postgresql://<nome_do_host>:<porta>/<nome_do_banco>`
+5. Defina `spring.datasource.username = <nome_do_usuário_do_banco>`
+6. Defina `spring.datasource.password = <senha_do_usuário_do_banco>`
+7. Execute o arquivo `/src/main/java/com/migs/mycontacts/MyContacts.java`
